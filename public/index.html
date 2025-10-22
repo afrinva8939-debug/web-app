@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Apartment Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+        input { padding: 8px; margin-bottom: 10px; width: 300px; }
+    </style>
+    <script>
+        async function fetchApartments() {
+          const q = document.getElementById('search').value;
+          const res = await fetch(`/apartments${q ? '?q=' + encodeURIComponent(q) : ''}`);
+          const apartments = await res.json();
+          const tbody = document.getElementById('results');
+          tbody.innerHTML = '';
+          apartments.forEach(a => {
+            const row = `
+              <tr>
+                <td>${a.apt_result_apartment_name}</td>
+                <td>${a.apt_result_address}</td>
+                <td>${a.apt_result_unit_number}</td>
+                <td>${a.apt_result_bed}</td>
+                <td>${a.apt_result_bath}</td>
+                <td>${a.apt_result_min_rent}</td>
+              </tr>`;
+            tbody.innerHTML += row;
+          });
+        }
+        window.onload = fetchApartments;
+    </script>
+</head>
+<body>
+<h1>Apartment Search</h1>
+<input id="search" placeholder="Search by name or address" onkeyup="fetchApartments()" />
+<table>
+    <thead>
+    <tr>
+        <th>Name</th><th>Address</th><th>Unit</th><th>Bed</th><th>Bath</th><th>Min Rent</th>
+    </tr>
+    </thead>
+    <tbody id="results"></tbody>
+</table>
+</body>
+</html>
