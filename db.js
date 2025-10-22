@@ -1,6 +1,5 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
-// All config comes from environment variables set in Railway!
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
