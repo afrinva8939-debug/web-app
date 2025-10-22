@@ -1,13 +1,20 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
+
+// All config comes from environment variables set in Railway!
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,        // use Railway's host, e.g. "containers-x8761..."
-  port: 3306,                       // MySQL default port, confirm with Railway
-  user: process.env.DB_USER,        // As given by Railway
-  password: process.env.DB_PASS,    // As given by Railway
-  database: process.env.DB_NAME     // Your DB name on Railway
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306
 });
+
 connection.connect((err) => {
-  if (err) console.error('DB connection error:', err);
-  else console.log('Connected to MySQL!');
+  if (err) {
+    console.error('Database connection failed:', err);
+    return;
+  }
+  console.log('Connected to MySQL database!');
 });
+
 module.exports = connection;
