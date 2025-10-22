@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 
 // The full API route for apartment details
 app.get('/apartments', (req, res) => {
-  db.query('SELECT * FROM apartments.apartment_details', (err, results) => {
+  db.query('SELECT * FROM apartment_details', (err, results) => {
     if (err) {
       console.error('Error fetching apartment details:', err);
       return res.status(500).json({ error: 'Database error' });
